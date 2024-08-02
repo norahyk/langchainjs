@@ -187,9 +187,10 @@ function revive(obj: any): any {
     if (isSuperset(keys, new Set(["messages"]))) {
       // TODO: Start checking for type: ChatPromptValue and ChatPromptValueConcrete
       // when LangServe bug is fixed
+      const messages = Array.isArray(obj) ? obj.messages: [obj.messages]
       return new ChatPromptValue({
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        messages: obj.messages.map((msg: any) => revive(msg)),
+        messages: messages.map((msg: any) => revive(msg)),
       });
     }
 
